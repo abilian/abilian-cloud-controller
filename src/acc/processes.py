@@ -2,21 +2,19 @@
 # to prevent collision with # the supervisor package.
 # Might not be needed actually. TODO: check this.
 
-import time
-
 from .util import system
 from .config import HOME
 
 CONF = """
 [unix_http_server]
-file=%(HOME)s/supervisor.sock   ; (the path to the socket file)
+file={HOME}/supervisor.sock   ; (the path to the socket file)
 
 [supervisord]
-logfile=%(HOME)s/supervisord.log ; (main log file;default $CWD/supervisord.log)
+logfile={HOME}/supervisord.log ; (main log file;default $CWD/supervisord.log)
 logfile_maxbytes=50MB       ; (max main logfile bytes b4 rotation;default 50MB)
 logfile_backups=10          ; (num of main logfile rotation backups;default 10)
 loglevel=info               ; (log level;default info; others: debug,warn,trace)
-pidfile=%(HOME)s/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+pidfile={HOME}/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
 nodaemon=false              ; (start in foreground if true;default false)
 minfds=1024                 ; (min. avail startup file descriptors;default 1024)
 minprocs=200                ; (min. avail process descriptors;default 200)
@@ -25,10 +23,10 @@ minprocs=200                ; (min. avail process descriptors;default 200)
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [supervisorctl]
-serverurl=unix://%(HOME)s/supervisor.sock ; use a unix:// URL  for a unix socket
+serverurl=unix://{HOME}/supervisor.sock ; use a unix:// URL  for a unix socket
 
 [program:nginx]
-command=nginx -c %(HOME)s/nginx/nginx.conf
+command=nginx -c {HOME}/nginx/nginx.conf
 autostart=true
 
 """
@@ -36,10 +34,10 @@ autostart=true
 
 class Supervisor:
     def start(self):
-        system("supervisord -c %s/supervisor.conf" % HOME)
+        system(f"supervisord -c {HOME}/supervisor.conf")
 
     def stop(self):
-        system("supervisorctl -c %s/supervisor.conf shutdown" % HOME, ignore_err=True)
+        system(f"supervisorctl -c {HOME}/supervisor.conf shutdown", ignore_err=True)
 
     def start_service(self, name):
         system(f"supervisorctl -c {HOME}/supervisor.conf start {name}")
@@ -51,26 +49,25 @@ class Supervisor:
         system(f"supervisorctl -c {HOME}/supervisor.conf restart {name}")
 
     def reload(self):
-        system("supervisorctl -c %s/supervisor.conf update" % HOME)
+        system(f"supervisorctl -c {HOME}/supervisor.conf update")
 
     def gen_conf(self):
         print("!!! GENERATING SUPERVISOR CONF !!!")
-        conf = CONF % {"HOME": HOME}
+        conf = CONF.format(HOME=HOME)
 
         from .model import session, Instance, RUNNING, READY
 
         instances = session.query(Instance).all()
         for instance in instances:
             if instance.state in (RUNNING, READY):
-                conf += "[program:%s]\n" % instance.name
+                conf += f"[program:{instance.name}]\n"
                 conf += "command=nuxeowrapper %d\n" % instance.iid
                 conf += "autostart=false\n"
                 conf += "stopsignal=INT\n"
                 conf += "\n"
 
-        fd = open("%s/supervisor.conf" % HOME, "wc")
-        fd.write(conf)
-        fd.close()
+        with open(f"{HOME}/supervisor.conf", "w") as fd:
+            fd.write(conf)
 
 
 supervisor = Supervisor()

@@ -15,11 +15,10 @@
 ##############################################################################
 
 
-""" Wrapper that know how to kill both the nuxeo launcher and the nuxeo process.
+""" Wrapper that knows how to kill both the nuxeo launcher and the nuxeo process.
 
 Might not be needed after all."""
 
-import os
 import sys
 import signal
 import time
@@ -63,7 +62,7 @@ class NuxeoWrapper:
             pid = int(open(self.pidfile).read().strip())
         except:
             pid = None
-            print("Can't read child pidfile %s!" % self.pidfile)
+            print(f"Can't read child pidfile {self.pidfile}!")
             return
         os.kill(self.pid, sig)
         os.kill(pid, sig)

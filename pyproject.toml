@@ -18,6 +18,12 @@ classifiers = [
 homepage = "https://github.com/abilian/abilian-cloud-controler"
 authors = ["Stefane Fermigier <sf@abilian.com>"]
 
+packages = [{ include = "acc", from = "src" }]
+
+
+[tool.poetry.scripts]
+acc = 'acc.main:main'
+
 
 [tool.poetry.dependencies]
 python = "^3.8"

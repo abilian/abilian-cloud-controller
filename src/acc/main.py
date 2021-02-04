@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from .commands import *
-from .config import DEBUG
+from acc import commands
+from acc.config import DEBUG
 import sys
 import getopt
 
@@ -16,7 +16,7 @@ def run(argv):
     for k, v in opts:
         if k == "-t":
             options["type"] = v
-    fn = globals()["cmd_" + cmd]
+    fn = vars(commands)["cmd_" + cmd]
     if len(args) > 1:
         fn(*args[1:], **options)
     else:
@@ -34,7 +34,7 @@ def main():
         try:
             run(args)
         except Exception as e:
-            print(e.message)
+            print(e)
             sys.exit(1)
 
 

@@ -8,7 +8,6 @@ test:
 check:
 	poetry run pep8 --exclude env -r --ignore E111,E225,E501 .
 	poetry run pylint -d W0311 acc
-	#pyflakes acc
 
 clean:
 	find . -name "*.pyc" | xargs rm -f

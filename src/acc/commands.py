@@ -20,7 +20,7 @@ def cmd_clean():
         session.commit()
 
     # os.unlink(DB)
-    system("rm -rf %s/nginx" % HOME)
+    system(f"rm -rf {HOME}/nginx")
 
 
 def cmd_boot():
@@ -121,7 +121,7 @@ def cmd_list():
     """Lists the existing instances."""
     instances = all_instances()
     for instance in instances:
-        print("Instance: %s" % instance.iid)
+        print(f"Instance: {instance.iid}")
         print(instance)
     return instances
 
@@ -135,7 +135,7 @@ def cmd_info(iid):
 
 def cmd_help():
     """Help about command-line usage."""
-    print("Usage: ncc <command> <args>")
+    print("Usage: acc <command> <args>")
     print()
     print("where <command> can be:\n")
     names = list(globals().keys())

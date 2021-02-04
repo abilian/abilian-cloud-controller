@@ -131,19 +131,19 @@ class Instance(Base):
 
     def setup_files(self):
         system(f"cp -r {MODEL} {self.home}")
-        system("rm -rf %s/nxserver/lib" % self.home)
-        system("rm -rf %s/nxserver/bundles" % self.home)
+        system(f"rm -rf {self.home}/nxserver/lib")
+        system(f"rm -rf {self.home}/nxserver/bundles")
         system(f"ln -sf {MODEL}/nxserver/lib {self.home}/nxserver/lib")
         system(f"ln -sf {MODEL}/nxserver/bundles {self.home}/nxserver/bundles")
 
     def setup_db(self):
         try:
-            system("createdb %s" % self.db_name)
+            system(f"createdb {self.db_name}")
         except:
-            system("sudo su postgres -c 'createdb %s'" % self.db_name)
+            system(f"sudo su postgres -c 'createdb {self.db_name}'")
 
     def setup_config(self):
-        config = open("%s/bin/nuxeo.conf" % self.home).read()
+        config = open(f"{self.home}/bin/nuxeo.conf").read()
         config += "nuxeo.wizard.done=true\n"
         config += "nuxeo.templates=postgresql\n"
         config += "nuxeo.db.name=" + self.db_name + "\n"
@@ -152,7 +152,7 @@ class Instance(Base):
         config += "nuxeo.server.http.port=" + str(self.port) + "\n"
         config += "nuxeo.server.tomcat-admin.port=" + str(self.admin_port) + "\n"
         config += "nuxeo.url=http://%s:%d/nuxeo\n" % (self.hostname, PORT)
-        fd = open("%s/bin/nuxeo.conf" % self.home, "w")
+        fd = open(f"{self.home}/bin/nuxeo.conf", "w")
         fd.write(config)
         fd.close()
 
@@ -202,10 +202,10 @@ class Instance(Base):
 
     def purge(self):
         try:
-            system("dropdb %s" % self.db_name)
+            system(f"dropdb {self.db_name}")
         except:
-            system("sudo su postgres -c 'dropdb %s'" % self.db_name)
-        system("rm -rf %s" % self.home)
+            system(f"sudo su postgres -c 'dropdb {self.db_name}'")
+        system(f"rm -rf {self.home}")
 
     def monitor(self):
         if not self.state == RUNNING:
@@ -213,7 +213,7 @@ class Instance(Base):
         log_file = f"{HOME}/nginx/log/access-{self.iid}.log"
         last_hit_time = os.stat(log_file).st_mtime
         if time.time() - last_hit_time > INACTIVITY_TIME:
-            print("Putting instance %s to sleep" % self.iid)
+            print(f"Putting instance {self.iid} to sleep")
             self.stop()
 
 

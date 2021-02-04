@@ -4,7 +4,7 @@ import psi.process
 
 
 def is_nginx_running():
-    pid_path = "%s/nginx/nginx.pid" % HOME
+    pid_path = f"{HOME}/nginx/nginx.pid"
     if not os.path.exists(pid_path):
         return False
     pid = int(open(pid_path).read())
@@ -16,7 +16,7 @@ def is_nginx_running():
 
 def reload_nginx():
     if is_nginx_running():
-        system("nginx -c %s/nginx/nginx.conf -s reload" % HOME)
+        system(f"nginx -c {HOME}/nginx/nginx.conf -s reload")
 
 
 def setup_nginx():
@@ -27,6 +27,5 @@ def setup_nginx():
     if not os.path.exists(HOME + "/nginx/log"):
         os.mkdir(HOME + "/nginx/log")
     nginx_conf = NGINX_CONF.replace("##HOME##", HOME)
-    fd = open(HOME + "/nginx/nginx.conf", "wc")
-    fd.write(nginx_conf)
-    fd.close()
+    with open(HOME + "/nginx/nginx.conf", "w") as fd:
+        fd.write(nginx_conf)

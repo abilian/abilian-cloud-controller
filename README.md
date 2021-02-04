@@ -1,7 +1,7 @@
 Abilian Cloud Controller
 ========================
 
-The project currently provides a "acc" command-line tool that allows to
+The project currently provides an `acc` command-line tool that allows to
 create, start, stop and destroy Abilian instances on a single dedicated server
 (or VM). 
 
