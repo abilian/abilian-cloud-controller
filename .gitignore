@@ -1,5 +1,6 @@
 *.pyc
 .idea
+.pycharm
 env
 build
 dist

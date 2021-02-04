@@ -5,7 +5,7 @@
 import os
 
 # Contains all the instances as well as the DB and nginx files
-HOME = os.environ['HOME'] + "/nuxeocloud/"
+HOME = os.environ["HOME"] + "/nuxeocloud/"
 
 # The "model" (or template) that is duplicated upon instance creation
 MODEL = HOME + "models/nuxeo-dm-5.4.2-tomcat"

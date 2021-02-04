@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "acc"
+version = "0.2"
+description = "acc is the Abilian Cloud Controller"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Unix",
+    "Operating System :: POSIX",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+    "Topic :: System :: Systems Administration",
+]
+homepage = "https://github.com/abilian/abilian-cloud-controler"
+authors = ["Stefane Fermigier <sf@abilian.com>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+flask = "*"
+jinja2 = "*"
+sqlalchemy = "*"
+psi = "*"
+supervisor = "*"
+
+
+[tool.poetry.dev-dependencies]
+nose = "*"
+pytest = "*"

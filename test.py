@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from ncc.config import PORT
-from ncc.commands import *
-from ncc.processes import supervisor
+from acc.config import PORT
+from acc.commands import *
+from acc.processes import supervisor
 
 from unittest import TestCase
 import urllib

@@ -23,11 +23,10 @@ import os
 import sys
 import signal
 import time
-from config import *
+from .config import *
 
 
 class NuxeoWrapper(object):
-
     def __init__(self, iid):
         self.setsignals()
         self.command = "%s/%d/bin/nuxeoctl" % (INSTANCES_HOME, iid)
@@ -61,10 +60,10 @@ class NuxeoWrapper(object):
 
     def passtochild(self, sig, frame):
         try:
-            pid = int(open(self.pidfile, 'r').read().strip())
+            pid = int(open(self.pidfile, "r").read().strip())
         except:
             pid = None
-            print "Can't read child pidfile %s!" % self.pidfile
+            print("Can't read child pidfile %s!" % self.pidfile)
             return
         os.kill(self.pid, sig)
         os.kill(pid, sig)
@@ -76,11 +75,12 @@ def main():
     try:
         iid = int(sys.argv[1])
     except ValueError:
-        print "nuxeowrapper <iid>"
+        print("nuxeowrapper <iid>")
         sys.exit(1)
 
     pp = NuxeoWrapper(iid)
     pp.go()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

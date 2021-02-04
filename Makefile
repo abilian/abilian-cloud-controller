@@ -1,36 +1,25 @@
 .PHONY: test setup-env install check clean tidy
 
-test: env
-	env/bin/python ncc/main.py halt
-	env/bin/python ncc/main.py clean
-	nosetests -v
-
-install:
-	pip install . --upgrade -r deps.txt
+test:
+	poetry run acc/main.py halt
+	poetry run acc/main.py clean
+	poetry run nosetests -v
 
 check:
-	pep8 --exclude env -r --ignore E111,E225,E501 .
-	pylint -d W0311 ncc
-	#pyflakes ncc
-
-env:
-	pip install --upgrade -s -E env -r deps.txt
-	echo "Remember to run 'source env/bin/activate'"
-
-setup-env:
-	pip install --upgrade -s -E env -r deps.txt
-	echo "Remember to run "source env/bin/activate"
+	poetry run pep8 --exclude env -r --ignore E111,E225,E501 .
+	poetry run pylint -d W0311 acc
+	#pyflakes acc
 
 clean:
 	find . -name "*.pyc" | xargs rm -f
-	rm -rf build ncc.egg-info dist
-	env/bin/python ncc/main.py halt
-	env/bin/python ncc/main.py clean
+	rm -rf build acc.egg-info dist
+	poetry run acc/main.py halt
+	poetry run acc/main.py clean
 
 tidy: clean
-	rm -rf env
+	rm -rf .tox
 
 push:
 	echo "Not yet"
 	#rsync -avz -e ssh src Makefile dependencies.txt crawl.sh \
-	#	nuxeo@styx.nuxeo.com:/var/www/home.nuxeo.org/
+	#	xxx@yyy.abilian.com:/var/www/home.abilian.org/

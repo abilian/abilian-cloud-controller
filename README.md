@@ -1,8 +1,8 @@
-Nuxeo Cloud Controller
-======================
+Abilian Cloud Controller
+========================
 
-The project currently provides a "ncc" command-line tool that allows to
-create, start, stop and destroy Nuxeo instances on a single dedicated server
+The project currently provides a "acc" command-line tool that allows to
+create, start, stop and destroy Abilian instances on a single dedicated server
 (or VM). 
 
 Note: this command-line tool is supposed to be used on the server,
@@ -21,10 +21,10 @@ What it does
 Install
 -------
 
-You need Python and pip (maybe easy_install too).
+You need Python and pip.
 
 Simply running "python setup.py install" should be enough, if you have installed
-all the dependencies (run "sudo pip install -r deps.txt" first).
+all the dependencies (run "pip install -r deps.txt" first).
 
 You can also use "make env" to create a virtualenv, then activate it
 with "source env/bin/activate".
@@ -32,10 +32,11 @@ with "source env/bin/activate".
 To test, you need to create a nuxeocloud directory in your home directory with a
 certain structure. You can use "sh setup.sh" for this.
 
-You would a wildcard DNS for the system to work. Since that's not practical, you can
-add to your /etc/hosts file something like:
+You would need a wildcard DNS for the system to work.
 
-127.0.0.1            nuxeo1 nuxeo2 nuxeo3 nuxeo4 nuxeo5
+Since that's not practical, you can add to your /etc/hosts file something like:
+
+127.0.0.1 abilian1 abilian2 abilian3 abilian4 abilian5
 
 (Assuming you will never test more than 5 instances).
 
@@ -50,18 +51,18 @@ The config is hardcoded in config.py. However, this is easy to fix.
 
 Typical scenario is:
 
-- ncc boot # starts nginx, mostly
-- ncc create 
-- ncc stop *iid*
-- ncc destroy *iid*
+- acc boot # starts nginx, mostly
+- acc create 
+- acc stop *iid*
+- acc destroy *iid*
 
 Currently, instance with iid (instance id) *iid* will be mapped to host
-"nuxeo*iid*". This can be changed in model.py.
+"abilian*iid*". This can be changed in model.py.
 
-Run "ncc help" for more info.
+Run "acc help" for more info.
 
-I parallel, you need to start the web server ("ncc server") and from
-time to time (i.e. using a crontab) to run "ncc monitor".
+I parallel, you need to start the web server ("acc server") and from
+time to time (i.e. using a crontab) to run "acc monitor".
 
 Architecture
 ------------
@@ -81,7 +82,7 @@ TODO
 
 Lots of things:
 
-- Pass parameters to ncc create (like: admin email, hostname, etc.) and manage more finely
+- Pass parameters to acc create (like: admin email, hostname, etc.) and manage more finely
   - Instance names, database names, passwords, admin password
   - Port
 - Better state control for instances

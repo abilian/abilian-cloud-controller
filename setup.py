@@ -3,21 +3,21 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ncc',
-    version="0.1",
-    description='ncc is the Nuxeo Cloud Controller',
+    name='acc',
+    version="0.2",
+    description='acc is the Abilian Cloud Controller',
     author='Stefane Fermigier',
-    author_email='sf@nuxeo.com',
-    url='https://github.com/compatible/nuxeo-cloud-controler',
+    author_email='sf@abilian.com',
+    url='https://github.com/abilian/abilian-cloud-controler',
     packages=find_packages(),
     # Not needed (yet?)
-    #data_files=[('ncc', ['config/nginx.conf']),],
+    #data_files=[('acc', ['config/nginx.conf']),],
     test_suite='nose.collector',
     tests_require=['nose'],
     entry_points={
         'console_scripts': [
-            'ncc = ncc.main:main',
-            'nuxeowrapper = ncc.nuxeowrapper:main',
+            'acc = acc.main:main',
+            'abilianwrapper = acc.abilianwrapper:main',
         ]
     },
     classifiers=[

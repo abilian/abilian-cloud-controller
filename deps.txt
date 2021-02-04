@@ -1,6 +1,0 @@
-flask
-jinja2
-nose
-sqlalchemy
-psi
-supervisor
