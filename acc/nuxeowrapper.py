@@ -26,7 +26,7 @@ import time
 from .config import *
 
 
-class NuxeoWrapper(object):
+class NuxeoWrapper:
     def __init__(self, iid):
         self.setsignals()
         self.command = "%s/%d/bin/nuxeoctl" % (INSTANCES_HOME, iid)
@@ -60,7 +60,7 @@ class NuxeoWrapper(object):
 
     def passtochild(self, sig, frame):
         try:
-            pid = int(open(self.pidfile, "r").read().strip())
+            pid = int(open(self.pidfile).read().strip())
         except:
             pid = None
             print("Can't read child pidfile %s!" % self.pidfile)

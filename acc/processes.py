@@ -34,7 +34,7 @@ autostart=true
 """
 
 
-class Supervisor(object):
+class Supervisor:
     def start(self):
         system("supervisord -c %s/supervisor.conf" % HOME)
 
@@ -42,13 +42,13 @@ class Supervisor(object):
         system("supervisorctl -c %s/supervisor.conf shutdown" % HOME, ignore_err=True)
 
     def start_service(self, name):
-        system("supervisorctl -c %s/supervisor.conf start %s" % (HOME, name))
+        system(f"supervisorctl -c {HOME}/supervisor.conf start {name}")
 
     def stop_service(self, name):
-        system("supervisorctl -c %s/supervisor.conf stop %s" % (HOME, name))
+        system(f"supervisorctl -c {HOME}/supervisor.conf stop {name}")
 
     def restart_service(self, name):
-        system("supervisorctl -c %s/supervisor.conf restart %s" % (HOME, name))
+        system(f"supervisorctl -c {HOME}/supervisor.conf restart {name}")
 
     def reload(self):
         system("supervisorctl -c %s/supervisor.conf update" % HOME)

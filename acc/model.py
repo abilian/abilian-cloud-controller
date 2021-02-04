@@ -130,11 +130,11 @@ class Instance(Base):
         self.setup_config()
 
     def setup_files(self):
-        system("cp -r %s %s" % (MODEL, self.home))
+        system(f"cp -r {MODEL} {self.home}")
         system("rm -rf %s/nxserver/lib" % self.home)
         system("rm -rf %s/nxserver/bundles" % self.home)
-        system("ln -sf %s/nxserver/lib %s/nxserver/lib" % (MODEL, self.home))
-        system("ln -sf %s/nxserver/bundles %s/nxserver/bundles" % (MODEL, self.home))
+        system(f"ln -sf {MODEL}/nxserver/lib {self.home}/nxserver/lib")
+        system(f"ln -sf {MODEL}/nxserver/bundles {self.home}/nxserver/bundles")
 
     def setup_db(self):
         try:
@@ -157,7 +157,7 @@ class Instance(Base):
         fd.close()
 
     def setup_nginx_config(self, reload=True):
-        conf_path = "%s/nginx/vhosts/%s.conf" % (HOME, self.iid)
+        conf_path = f"{HOME}/nginx/vhosts/{self.iid}.conf"
         if not self.state in (RUNNING, READY):
             if os.path.exists(conf_path):
                 os.unlink(conf_path)
@@ -210,7 +210,7 @@ class Instance(Base):
     def monitor(self):
         if not self.state == RUNNING:
             return
-        log_file = "%s/nginx/log/access-%s.log" % (HOME, self.iid)
+        log_file = f"{HOME}/nginx/log/access-{self.iid}.log"
         last_hit_time = os.stat(log_file).st_mtime
         if time.time() - last_hit_time > INACTIVITY_TIME:
             print("Putting instance %s to sleep" % self.iid)
