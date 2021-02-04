@@ -32,3 +32,6 @@ supervisor = "*"
 [tool.poetry.dev-dependencies]
 nose = "*"
 pytest = "*"
+pep8 = "^1.7.1"
+flake8 = "^3.8.4"
+
